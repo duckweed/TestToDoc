@@ -3,23 +3,17 @@ package org.adscale.testtodoc;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TestToDoc_Test extends TestToDoc {
-    String demoJar = "../TestToDoc-TestJar/target/TestToDoc-TestJar-1.0-SNAPSHOT-tests.jar";
+    public static final String demoJar = "../TestToDoc-TestJar/target/TestToDoc-TestJar-1.0-SNAPSHOT-tests.jar";
 
     @Test
     public void outputTestsNicely() {
-        List<String> methods = jarFile(demoJar);
-        List<String> strings = new ArrayList<String>();
-        for (String method : methods) {
-            strings.add(camelCaseWord(method));
-        }
-
+        List<String> strings = outputTests(demoJar);
         assertEquals(1, strings.size());
         assertEquals("a test we want to view", strings.get(0));
     }
