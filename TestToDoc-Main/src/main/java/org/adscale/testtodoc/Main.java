@@ -11,7 +11,6 @@ public class Main {
                 run(filename);
                 return;
             }
-            System.out.println("file not found");
             return;
         }
         System.out.println("usage TestToDoc: jarFileName");
@@ -21,7 +20,7 @@ public class Main {
         System.out.println(arg);
         List<String> methods = new TestToDoc().outputTests(arg);
         if (methods.isEmpty()) {
-            System.out.println("no methods found");
+            System.out.println("no tests found here");
         } else {
             for (String method : methods) {
                 System.out.println(" - " + method);

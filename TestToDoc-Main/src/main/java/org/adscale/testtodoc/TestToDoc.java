@@ -15,6 +15,7 @@ import java.util.jar.JarFile;
  * Hello world!
  */
 public class TestToDoc {
+
     protected List<String> jarFile(String demoJar1) {
         ArrayList<String> res = new ArrayList<String>();
         try {
@@ -30,9 +31,11 @@ public class TestToDoc {
                     Class<?> aClass = loader.loadClass(substring);
                     Method[] methods = aClass.getMethods();
                     for (Method method : methods) {
-                        Annotation[] annotations = method.getAnnotations();
+                        Annotation[] annotations = method.getDeclaredAnnotations();
                         for (Annotation annotation : annotations) {
-                            res.add(method.getName());
+                            if (annotation.annotationType().getName().endsWith(".Test")) {
+                                res.add(method.getName());
+                            }
                         }
                     }
                 }
@@ -69,13 +72,13 @@ public class TestToDoc {
 
     private void handleUnderscore(StringBuilder sb, String word, int offset) {
         int index = offset + 1;
-        if(index >= word.length()) {
+        if (index >= word.length()) {
             sb.append(".");
             return;
         }
         if (Character.isLowerCase(word.charAt(index))) {
             sb.append(", ");
-        }else{
+        } else {
             sb.append(". ");
         }
         return;
