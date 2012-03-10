@@ -6,11 +6,11 @@
     <artifactId>TestToDoc-TestJar</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <parent>
-        <groupId>org.adscale.testtodoc</groupId>
-        <artifactId>TestToDoc</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
+    <!--<parent>-->
+    <!--<groupId>org.adscale.testtodoc</groupId>-->
+    <!--<artifactId>TestToDoc</artifactId>-->
+    <!--<version>1.0-SNAPSHOT</version>-->
+    <!--</parent>-->
 
     <name>TestToDoc-TestJar</name>
     <url>http://maven.apache.org</url>
@@ -18,21 +18,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
-            </plugin>
-        </plugins>
-    </build>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.10</version>
-            <!--<scope>test</scope>-->
         </dependency>
     </dependencies>
 

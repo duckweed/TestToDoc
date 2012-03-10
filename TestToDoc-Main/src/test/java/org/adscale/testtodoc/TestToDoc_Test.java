@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TestToDoc_Test extends TestToDoc {
-    public static final String demoJar = "../TestToDoc-TestJar/target/TestToDoc-TestJar-1.0-SNAPSHOT-tests.jar";
+    public static final String demoJar = "../TestToDoc-TestJar/target/TestToDoc-TestJar-1.0-SNAPSHOT.jar";
 
     @Test
     public void outputTestsNicely() {

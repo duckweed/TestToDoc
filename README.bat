@@ -1,14 +1,16 @@
 
-call mvn install -Dmaven.test.skip
+@echo off
 
-call mvn  jar:test-jar
+call mvn clean install -Dmaven.test.skip
 
-dir target\TestToDoc-Main-1.0-SNAPSHOT-tests.jar
+cd TestToDoc-TestJar
 
-cd TestToDoc-Main
+call mvn jar:test-jar
 
-call mvn install
+::cd ..\TestToDoc-Main
 
-call runDemo.bat
+::call mvn install
+
+::call runDemo.bat
 
 cd ..

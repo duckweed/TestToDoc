@@ -1,8 +1,8 @@
 package org.adscale.testtodoc.testjar;
 
-import org.junit.*;
+import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class DemonstrateJarFileWalking_Test {
     @Test
