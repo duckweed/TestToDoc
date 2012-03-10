@@ -11,25 +11,24 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-/**
- * Hello world!
- */
+import static org.adscale.testtodoc.CamelCaser.camelCaseWord;
+
 public class TestToDoc {
 
-    protected List<String> jarFile(String demoJar1) {
+    protected List<String> jarFile(String jarName) {
         ArrayList<String> res = new ArrayList<String>();
         try {
-            JarFile jarFile = new JarFile(demoJar1);
+            JarFile jarFile = new JarFile(jarName);
             Enumeration<JarEntry> entries = jarFile.entries();
-            URLClassLoader loader = createClassLoader(demoJar1);
+            URLClassLoader loader = createClassLoader(jarName);
             while (entries.hasMoreElements()) {
                 JarEntry jarEntry = entries.nextElement();
-                String name = jarEntry.getName();
-                boolean isClass = name.endsWith(".class");
+                String entryName = jarEntry.getName();
+                boolean isClass = entryName.endsWith(".class");
                 if (isClass) {
-                    String substring = jarEntryIntoClass(name);
-                    Class<?> aClass = loader.loadClass(substring);
-                    Method[] methods = aClass.getMethods();
+                    String clazzName = jarEntryIntoClassName(entryName);
+                    Class<?> clazz = loader.loadClass(clazzName);
+                    Method[] methods = clazz.getMethods();
                     for (Method method : methods) {
                         Annotation[] annotations = method.getDeclaredAnnotations();
                         for (Annotation annotation : annotations) {
@@ -46,44 +45,6 @@ public class TestToDoc {
         return res;
     }
 
-    protected String camelCaseWord(String word) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < word.length(); i++) {
-            if ('_' == word.charAt(i)) {
-                handleUnderscore(sb, word, i);
-                continue;
-            }
-            char c = word.charAt(i);
-            if (Character.isLowerCase(c)) {
-                sb.append(c);
-            } else {
-                sb.append(" ");
-                sb.append(Character.toLowerCase(c));
-            }
-        }
-
-        String ret = sb.toString();
-        if (ret.startsWith("test")) {
-            ret = ret.substring(4, ret.length());
-        }
-        ret = ret.replaceAll("  ", " ");
-        return ret.trim();
-    }
-
-    private void handleUnderscore(StringBuilder sb, String word, int offset) {
-        int index = offset + 1;
-        if (index >= word.length()) {
-            sb.append(".");
-            return;
-        }
-        if (Character.isLowerCase(word.charAt(index))) {
-            sb.append(", ");
-        } else {
-            sb.append(". ");
-        }
-        return;
-    }
-
     private URLClassLoader createClassLoader(String fileName) throws Exception {
         String urlPath = makeUrlPath(fileName);
         URL url = new URL(urlPath);
@@ -96,7 +57,7 @@ public class TestToDoc {
         return "file:///" + path + "/" + fileName;
     }
 
-    protected String jarEntryIntoClass(String name) {
+    protected String jarEntryIntoClassName(String name) {
         String substring = name.substring(0, name.length() - 6);
         substring = substring.replaceAll("/", ".");
         return substring;

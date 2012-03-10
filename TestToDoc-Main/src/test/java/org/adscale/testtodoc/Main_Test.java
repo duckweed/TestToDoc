@@ -28,7 +28,7 @@ public class Main_Test extends Main {
     public void withKnownFile_outputText() {
         main(new String[]{TestToDoc_Test.demoJar});
         String ls = System.getProperty("line.separator");
-        assertSystemOut(TestToDoc_Test.demoJar + ls + " - a test we want to view");
+        assertSystemOut("- a test we want to view");
     }
 
     @Test

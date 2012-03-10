@@ -11,13 +11,13 @@ public class Main {
                 run(filename);
                 return;
             }
+            System.out.println("file not found");
             return;
         }
         System.out.println("usage TestToDoc: jarFileName");
     }
 
     private static void run(String arg) {
-        System.out.println(arg);
         List<String> methods = new TestToDoc().outputTests(arg);
         if (methods.isEmpty()) {
             System.out.println("no tests found here");

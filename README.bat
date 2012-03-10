@@ -7,6 +7,8 @@ dir target\TestToDoc-Main-1.0-SNAPSHOT-tests.jar
 
 cd TestToDoc-Main
 
-runDemo.bat
+call mvn install
+
+call runDemo.bat
 
 cd ..
