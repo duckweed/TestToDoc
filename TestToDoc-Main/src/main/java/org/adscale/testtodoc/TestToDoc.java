@@ -15,34 +15,51 @@ import static org.adscale.testtodoc.CamelCaser.camelCaseWord;
 
 public class TestToDoc {
 
-    protected List<String> jarFile(String jarName) {
-        ArrayList<String> res = new ArrayList<String>();
+    protected List<String> handleTests(String jarName) {
+        ArrayList<String> tests = new ArrayList<String>();
         try {
-            JarFile jarFile = new JarFile(jarName);
-            Enumeration<JarEntry> entries = jarFile.entries();
-            URLClassLoader loader = createClassLoader(jarName);
-            while (entries.hasMoreElements()) {
-                JarEntry jarEntry = entries.nextElement();
-                String entryName = jarEntry.getName();
-                boolean isClass = entryName.endsWith(".class");
-                if (isClass) {
-                    String clazzName = jarEntryIntoClassName(entryName);
-                    Class<?> clazz = loader.loadClass(clazzName);
-                    Method[] methods = clazz.getMethods();
-                    for (Method method : methods) {
-                        Annotation[] annotations = method.getDeclaredAnnotations();
-                        for (Annotation annotation : annotations) {
-                            if (annotation.annotationType().getName().endsWith(".Test")) {
-                                res.add(method.getName());
-                            }
-                        }
-                    }
+            File file = new File(jarName);
+            if (file.isFile()) {
+                JarFile jarFile = new JarFile(jarName);
+                Enumeration<JarEntry> entries = jarFile.entries();
+                URLClassLoader loader = createClassLoader(jarName);
+                while (entries.hasMoreElements()) {
+                    JarEntry jarEntry = entries.nextElement();
+                    handleEntry(tests, loader, jarEntry);
                 }
+            } else {
+                System.out.println("handle dir");
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return res;
+        return tests;
+    }
+
+    private void handleEntry(ArrayList<String> res, URLClassLoader loader, JarEntry possibleClass) {
+        String clazzPath = possibleClass.getName();
+        boolean isClass = clazzPath.endsWith(".class");
+        if (isClass) {
+            String clazzName = massageToClassPath(clazzPath);
+            Class<?> clazz = loadClass(loader, clazzName);
+            Method[] methods = clazz.getMethods();
+            for (Method method : methods) {
+                Annotation[] annotations = method.getDeclaredAnnotations();
+                for (Annotation annotation : annotations) {
+                    if (annotation.annotationType().getName().endsWith(".Test")) {
+                        res.add(method.getName());
+                    }
+                }
+            }
+        }
+    }
+
+    private Class<?> loadClass(URLClassLoader loader, String clazzName) {
+        try {
+            return loader.loadClass(clazzName);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private URLClassLoader createClassLoader(String fileName) throws Exception {
@@ -57,14 +74,14 @@ public class TestToDoc {
         return "file:///" + path + "/" + fileName;
     }
 
-    protected String jarEntryIntoClassName(String name) {
+    protected String massageToClassPath(String name) {
         String substring = name.substring(0, name.length() - 6);
         substring = substring.replaceAll("/", ".");
         return substring;
     }
 
     protected List<String> outputTests(String file) {
-        List<String> methods = jarFile(file);
+        List<String> methods = handleTests(file);
         List<String> strings = new ArrayList<String>();
         for (String method : methods) {
             strings.add(camelCaseWord(method));

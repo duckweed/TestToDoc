@@ -22,7 +22,7 @@ public class TestToDoc_Test extends TestToDoc {
     @Test
     public void readJarFile() {
         assertTrue("demoFile should exist", new File(demoJar).exists());
-        List<String> methods = jarFile(demoJar);
+        List<String> methods = handleTests(demoJar);
         assertEquals(1, methods.size());
         assertEquals("ATestWeWantToView", methods.get(0));
     }
@@ -34,6 +34,6 @@ public class TestToDoc_Test extends TestToDoc {
     }
 
     private void assertJarEntryConvertedIntoClassName(String expectedClassName, String jarEntry) {
-        assertEquals(expectedClassName, jarEntryIntoClassName(jarEntry));
+        assertEquals(expectedClassName, massageToClassPath(jarEntry));
     }
 }
