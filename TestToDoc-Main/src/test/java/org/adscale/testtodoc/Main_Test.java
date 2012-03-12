@@ -26,9 +26,15 @@ public class Main_Test extends Main {
 
     @Test
     public void withKnownFile_outputText() {
-        main(new String[]{TestToDoc_Test.demoJar});
+        main(new String[]{TestToDoc_Test.DEMO_JAR});
         String ls = System.getProperty("line.separator");
         assertSystemOut("- a test we want to view");
+    }
+
+    @Test
+    public void withKnownDir_outputText() {
+        main(new String[]{TestToDoc_Test.DEMO_DIR});
+        System.out.println("os.toString() = " + os.toString());
     }
 
     @Test
