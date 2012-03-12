@@ -118,9 +118,6 @@ public class TestToDoc {
                 if (isClass) {
                     String clazzName = massageToClassPath(clazzPath);
                     URLClassLoader classLoader = createClassLoader(dirName);
-
-                    System.out.println("created class loader with '" + dirName + "'");
-
                     Class<?> clazz = loadClass(classLoader, clazzName);
                     handleClass(tests, clazz);
                 }
