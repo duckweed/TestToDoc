@@ -14,32 +14,32 @@ public class CamelCaser_Test {
     }
 
     @Test
-    public void camelCase_doesntPrependSpace() {
+    public void wontPrependSpace() {
         Assert.assertEquals("andrew oxenburgh", CamelCaser.camelCaseWord("AndrewOxenburgh"));
     }
 
     @Test
-    public void camelCase_keepsTestWordNotAtEnd() {
+    public void keepsTestWordNotAtEnd() {
         Assert.assertEquals("this test should stay here", CamelCaser.camelCaseWord("ThisTestShouldStayHere"));
     }
 
     @Test
-    public void camelCase_ignoresPrecedingTest() {
+    public void ignoresleading_test_word() {
         Assert.assertEquals("thing", CamelCaser.camelCaseWord("testThing"));
     }
 
     @Test
-    public void camelCase_underscoresFollowedByLittleLettersBecomeCommas() {
+    public void underscoresFollowedByLittleLettersBecomeCommas() {
         Assert.assertEquals("under, score", CamelCaser.camelCaseWord("under_score"));
     }
 
     @Test
-    public void camelCase_underscoresFollowedByBigLettersBecomeFullStops() {
+    public void underscoresFollowedByBigLettersBecomeFullStops() {
         Assert.assertEquals("under. score", CamelCaser.camelCaseWord("under_Score"));
     }
 
     @Test
-    public void camelCase_trainlingUnderscoreBecomesFullStop() {
+    public void trailingUnderscoreBecomesFullStop() {
         Assert.assertEquals("under.", CamelCaser.camelCaseWord("under_"));
     }
 }

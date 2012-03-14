@@ -18,7 +18,7 @@ public class TestToDoc_Test extends TestToDoc {
     public void outputTestsNicely() {
         List<String> strings = outputTests(DEMO_JAR);
         assertEquals(1, strings.size());
-        assertEquals("a test we want to view", strings.get(0));
+        assertEquals("org.adscale.testtodoc.testjar.DemonstrateJarFileWalking_Test::a test we want to view", strings.get(0));
     }
 
 
@@ -27,7 +27,7 @@ public class TestToDoc_Test extends TestToDoc {
         assertTrue("precond: demoFile should exist", new File(DEMO_JAR).exists());
         List<String> methods = calcMethods(DEMO_JAR);
         assertEquals(1, methods.size());
-        assertEquals("ATestWeWantToView", methods.get(0));
+        assertEquals("org.adscale.testtodoc.testjar.DemonstrateJarFileWalking_Test::ATestWeWantToView", methods.get(0));
     }
 
     @Test

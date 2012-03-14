@@ -59,7 +59,7 @@ public class TestToDoc {
             Annotation[] annotations = method.getDeclaredAnnotations();
             for (Annotation annotation : annotations) {
                 if (annotation.annotationType().getName().endsWith(".Test")) {
-                    res.add(method.getName());
+                    res.add(clazz.getName() + "::" + method.getName());
                 }
             }
         }
@@ -101,7 +101,10 @@ public class TestToDoc {
     private List<String> camelCaseList(List<String> methods) {
         List<String> strings = new ArrayList<String>();
         for (String method : methods) {
-            strings.add(camelCaseWord(method));
+
+            String[] split = method.split("::");
+
+            strings.add(split[0] + "::" + camelCaseWord(split[1]));
         }
         return strings;
     }

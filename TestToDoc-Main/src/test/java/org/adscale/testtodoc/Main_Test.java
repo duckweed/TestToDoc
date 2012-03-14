@@ -25,10 +25,16 @@ public class Main_Test extends Main {
     }
 
     @Test
-    public void withKnownFile_outputText() {
+    public void withKnownFile_outputText_singleLinePerTest() {
         main(new String[]{TestToDoc_Test.DEMO_JAR});
-        String ls = System.getProperty("line.separator");
-        assertSystemOut("- a test we want to view");
+        assertSystemOut("- org.adscale.testtodoc.testjar.DemonstrateJarFileWalking_Test::a test we want to view");
+    }
+
+
+    @Test
+    public void withKnownFile_outputText_breakBetweenTestClasses() {
+        main(new String[]{TestToDoc_Test.DEMO_JAR, "-b"});
+        assertSystemOut("org.adscale.testtodoc.testjar.DemonstrateJarFileWalking_Test" + LINE_SEPERATOR + " - a test we want to view");
     }
 
     @Test
@@ -45,9 +51,10 @@ public class Main_Test extends Main {
 
 
     PrintStream out;
-
     PrintStream err;
     ByteArrayOutputStream os;
+
+    String LINE_SEPERATOR = System.getProperty("line.separator");
 
     @After
     public void after() {
