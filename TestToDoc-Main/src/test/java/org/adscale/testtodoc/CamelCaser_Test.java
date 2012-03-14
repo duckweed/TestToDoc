@@ -50,8 +50,8 @@ public class CamelCaser_Test {
     }
 
     @Test
-    public void underscoresFollowedByBigLettersBecomeFullStops() {
-        Assert.assertEquals("under. score", CamelCaser.camelCaseWord("under_Score"));
+    public void underscoresFollowedByBigLettersBecomeFullStops_DontThey() {
+        Assert.assertEquals("u. s", CamelCaser.camelCaseWord("u_S"));
     }
 
     @Test
