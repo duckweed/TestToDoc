@@ -24,7 +24,7 @@ public class CamelCaser_Test {
     }
 
     @Test
-    public void ignoresleading_test_word() {
+    public void ignoresLeading_test_word() {
         Assert.assertEquals("thing", CamelCaser.camelCaseWord("testThing"));
     }
 

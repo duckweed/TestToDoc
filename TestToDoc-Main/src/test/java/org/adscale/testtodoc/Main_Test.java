@@ -12,33 +12,33 @@ import static org.junit.Assert.assertEquals;
 public class Main_Test extends Main {
 
     @Test
-    public void usage() {
+    public void usage() throws Exception {
         main(new String[]{});
         String expected = "usage TestToDoc: jarFileName".trim();
         assertSystemOut(expected);
     }
 
     @Test
-    public void withUnknownFile_outputErrorMessage() {
+    public void withNonExistentFile_outputErrorMessage() throws Exception {
         main(new String[]{"nonExistentFile"});
         assertSystemOut("file not found");
     }
 
     @Test
-    public void withKnownFile_outputText_singleLinePerTest() {
+    public void withJarFile_outputText_singleLinePerTest() throws Exception {
         main(new String[]{TestToDoc_Test.DEMO_JAR});
         assertSystemOut("- org.adscale.testtodoc.testjar.DemonstrateJarFileWalking_Test::a test we want to view");
     }
 
 
     @Test
-    public void withKnownFile_outputText_breakBetweenTestClasses() {
+    public void withJarFile_outputText_breakBetweenTestClasses() throws Exception {
         main(new String[]{TestToDoc_Test.DEMO_JAR, "-b"});
-        assertSystemOut("org.adscale.testtodoc.testjar.DemonstrateJarFileWalking_Test" + LINE_SEPERATOR + " - a test we want to view");
+        assertSystemOut("org.adscale.testtodoc.testjar.DemonstrateJarFileWalking_Test" + LN_SEP + " - a test we want to view");
     }
 
     @Test
-    public void withKnownDir_outputText() {
+    public void withKnownDir_outputText() throws Exception {
         main(new String[]{TestToDoc_Test.DEMO_DIR});
         System.out.println("os.toString() = " + os.toString());
     }
@@ -54,7 +54,7 @@ public class Main_Test extends Main {
     PrintStream err;
     ByteArrayOutputStream os;
 
-    String LINE_SEPERATOR = System.getProperty("line.separator");
+    static String LN_SEP = System.getProperty("line.separator");
 
     @After
     public void after() {
